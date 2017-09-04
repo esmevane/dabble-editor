@@ -13,6 +13,7 @@ export class Editor extends EventDispatcher {
     super();
     this.options = options;
     this.view = null;
+    this.titleTagName = undefined;
     this.state = getEditorState(this.options);
     this._lastSelection = this.state.selection;
     this.apply = this.apply.bind(this);
