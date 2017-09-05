@@ -10,6 +10,9 @@ import { navKeymap } from './navigation';
 import { menuPlugin } from './menu';
 import { spaces } from './spaces';
 
+baseKeymap.Escape = (state, dispatch, view) => {
+  view.dom.blur();
+};
 
 export function plugins(schema, options) {
   let plugins = [
