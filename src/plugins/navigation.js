@@ -13,7 +13,7 @@ export function navKeymap(options) {
     ArrowDown: getNext({ container, boundary: 'end' }),
     'Meta-ArrowDown': getNext({ container, boundary: 'end' }),
     ArrowLeft: getNext({ container, cursorOnly: true, atBoundary: true, boundary: 'start' }),
-    // Backspace: getNext({ container, cursorOnly: true, atBoundary: true, boundary: 'start' }),
+    Backspace: getNext({ container, cursorOnly: true, atBoundary: true, boundary: 'start' }),
     'ArrowUp': getNext({ container, boundary: 'start' }),
     'Meta-ArrowUp': getNext({ container, boundary: 'start' })
   };

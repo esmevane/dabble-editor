@@ -12,7 +12,6 @@ export function placeholders(placeholder) {
         return DecorationSet.create(state.doc, [
           Decoration.node(0, state.doc.firstChild.nodeSize, { placeholder: text, class: empty })
         ]);
-        return decorations;
       }
     }
   });
