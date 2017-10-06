@@ -73,6 +73,7 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror img {
   cursor: default;
+  max-width: 100%;
 }
 
 .ProseMirror table {
