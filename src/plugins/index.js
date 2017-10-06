@@ -1,8 +1,7 @@
-import { input } from './input';
+import { buildInputRules } from './input';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { dropCursor } from 'prosemirror-dropcursor';
-import { gapCursor } from 'prosemirror-gapcursor';
 import { placeholders } from './placeholders';
 import { history, customizeHistory } from './history';
 import { buildKeymap } from './keymap';
@@ -16,7 +15,7 @@ baseKeymap.Escape = (state, dispatch, view) => {
 
 export function plugins(schema, options) {
   let plugins = [
-    input(schema),
+    buildInputRules(schema),
     keymap(navKeymap(options)),
     keymap(buildKeymap(schema)),
     keymap(baseKeymap),
@@ -30,7 +29,6 @@ export function plugins(schema, options) {
     spaces(),
     menuPlugin(),
     dropCursor(),
-    gapCursor()
   ];
 
   return plugins;

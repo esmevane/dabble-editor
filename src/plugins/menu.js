@@ -299,7 +299,7 @@ function canSetBlock(type, attrs) {
       depth = $from.depth - 1;
       target = $from.parent;
     }
-    if (!target.isTextblock || target.hasMarkup(type, attrs)) return false;
+    if (!target.isTextblock) return false;
     let index = $from.index(depth);
     if (!$from.node(depth).canReplaceWith(index, index + 1, type)) return false;
     return true;
@@ -308,13 +308,13 @@ function canSetBlock(type, attrs) {
 
 function markApplies(doc, ranges, type) {
   for (let i = 0; i < ranges.length; i++) {
-    let {$from, $to} = ranges[i];
-    let can = $from.depth == 0 ? doc.contentMatchAt(0).allowsMark(type) : false;
+    let {$from, $to} = ranges[i]
+    let can = $from.depth == 0 ? doc.type.allowsMarkType(type) : false
     doc.nodesBetween($from.pos, $to.pos, node => {
-      if (can) return false;
-      can = node.inlineContent && node.contentMatchAt(0).allowsMark(type);
+      if (can) return false
+      can = node.inlineContent && node.type.allowsMarkType(type)
     })
-    if (can) return true;
+    if (can) return true
   }
-  return false;
+  return false
 }

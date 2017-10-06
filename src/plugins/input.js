@@ -1,20 +1,45 @@
-import { blockQuoteRule, orderedListRule, bulletListRule, codeBlockRule, headingRule,
-       inputRules, allInputRules } from 'prosemirror-inputrules';
+import {
+  inputRules,
+  wrappingInputRule,
+  textblockTypeInputRule,
+  smartQuotes,
+  emDash,
+  ellipsis
+} from 'prosemirror-inputrules';
 
 
-export function input(schema) {
-  return inputRules({ rules: allInputRules.concat(buildInputRules(schema)) });
+export function blockQuoteRule(nodeType) {
+  return textblockTypeInputRule(/^\s*>\s$/, nodeType)
 }
 
-function buildInputRules(schema) {
-  let result = [], type;
-  if (type = schema.nodes.blockquote) result.push(blockQuoteRule(type));
-  if (type = schema.nodes.ordered_list) result.push(orderedListRule(type));
-  if (type = schema.nodes.bullet_list) result.push(bulletListRule(type));
-  if (type = schema.nodes.code_block) result.push(codeBlockRule(type));
-  if (type = schema.nodes.heading) result.push(headingRule(type, 6));
+
+export function orderedListRule(nodeType) {
+  return wrappingInputRule(/^(\d+)\.\s$/, nodeType, match => ({order: +match[1]}),
+                           (match, node) => node.childCount + node.attrs.order == +match[1])
+}
+
+export function bulletListRule(nodeType) {
+  return wrappingInputRule(/^\s*([-+*])\s$/, nodeType)
+}
+
+export function codeBlockRule(nodeType) {
+  return textblockTypeInputRule(/^```$/, nodeType)
+}
+
+export function headingRule(nodeType, maxLevel) {
+  return textblockTypeInputRule(new RegExp("^(#{1," + maxLevel + "})\\s$"),
+                                nodeType, match => ({level: match[1].length}))
+}
+
+export function buildInputRules(schema) {
   // if (type = schema.nodes.scene) result.push(splitRule(/^\*{3}$/, 1));
-  return result;
+  let rules = smartQuotes.concat(ellipsis, emDash), type;
+  if (type = schema.nodes.blockquote) rules.push(blockQuoteRule(type));
+  if (type = schema.nodes.ordered_list) rules.push(orderedListRule(type));
+  if (type = schema.nodes.bullet_list) rules.push(bulletListRule(type));
+  if (type = schema.nodes.code_block) rules.push(codeBlockRule(type));
+  if (type = schema.nodes.heading) rules.push(headingRule(type, 6));
+  return inputRules({rules});
 }
 
 // function splitRule(match, depth) {

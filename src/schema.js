@@ -27,7 +27,7 @@ export function getSchema(options = {}) {
   }
 
   let nodes = addListNodes(basicSchema.spec.nodes, 'paragraph block*', 'block');
-  nodes.get('blockquote').content = 'inline<_>*';
+  nodes.get('blockquote').content = 'inline*';
   let marks = basicSchema.spec.marks;
 
   if (options.nodes) nodes = getOrderedMap(nodes, options.nodes);

@@ -1,6 +1,4 @@
-import { DOMChange } from 'prosemirror-view/dist/domchange';
 import { Plugin, Selection } from 'prosemirror-state';
-DOMChange.commitTimeout = 0;
 
 export function spaces() {
   return new Plugin({

@@ -1,5 +1,4 @@
-import { wrapIn, setBlockType, chainCommands, toggleMark, exitCode } from 'prosemirror-commands';
-import { selectNextCell, selectPreviousCell } from 'prosemirror-schema-table';
+import { wrapIn, setBlockType, chainCommands, toggleMark, exitCode, joinUp, joinDown, lift } from 'prosemirror-commands';
 import { wrapInList, splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
 import { NodeSelection } from 'prosemirror-state';
 import { undo, redo } from 'prosemirror-history';
@@ -23,6 +22,10 @@ export function buildKeymap(schema, mapKeys) {
   bind("Shift-Mod-z", redo);
   bind("Backspace", undoInputRule);
   if (!mac) bind("Mod-y", redo);
+
+  bind("Alt-ArrowUp", joinUp);
+  bind("Alt-ArrowDown", joinDown);
+  bind("Mod-BracketLeft", lift);
 
   if (type = schema.marks.strong) {
     bind("Mod-b", toggleMark(type));
@@ -101,11 +104,6 @@ export function buildKeymap(schema, mapKeys) {
       dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView());
       return true;
     });
-  }
-
-  if (schema.nodes.table_row) {
-    bind("Tab", selectNextCell);
-    bind("Shift-Tab", selectPreviousCell);
   }
 
   return keys;
