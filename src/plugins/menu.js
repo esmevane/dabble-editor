@@ -24,10 +24,8 @@ class Menu {
     });
     dom.addEventListener('blur', () => {
       setTimeout(() => {
-        if (doc.activeElement !== dom && !this.element.contains(doc.activeElement)) {
-          this.hide();
-          this.blurred = true;
-        }
+        this.hide();
+        this.blurred = true;
       });
     });
     this.element.input.addEventListener('blur', () => {
