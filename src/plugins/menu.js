@@ -85,7 +85,7 @@ class Menu {
 
   reposition() {
     var container = this.element.parentNode;
-    if (!container) return;
+    if (!container || !this.view.docView) return;
     this.updateState();
     var { from, to } = this.view.state.selection;
     let { node: fromNode, offset: fromOffset } = this.view.domAtPos(from);
