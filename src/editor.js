@@ -69,12 +69,13 @@ export class Editor extends EventDispatcher {
   }
 
   get text() {
-    return this.state.doc.textContent;
+    let doc = this.state.doc;
+    return doc.textBetween(0, doc.content.size, '\n');
   }
 
   set text(value) {
     let state = this.state;
-    let tr = state.tr.replaceWith(1, state.doc.nodeSize - 3, value ? state.schema.text(value) : null);
+    let tr = state.tr.replaceWith(1, state.doc.content.size, value ? state.schema.text(value) : null);
     this.apply(tr);
   }
 
