@@ -78,6 +78,10 @@ export class Editor extends EventDispatcher {
     this.apply(tr);
   }
 
+  refresh() {
+    this.view.updateState(this.view.state);
+  }
+
   focus() {
     if (this.state.selection.type === 'node') {
       this.selection = { type: 'text', anchor: 1, head: 1 };
