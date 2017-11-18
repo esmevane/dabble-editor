@@ -64,7 +64,7 @@ export class Editor extends EventDispatcher {
     let state = this.state;
     let div = document.createElement('div');
     div.innerHTML = value;
-    let fragment = DOMParser.fromSchema(state.schema).parse(div).content;
+    let fragment = DOMParser.fromSchema(state.schema).parse(div, { preserveWhitespace: 'full' }).content;
     this.apply(this.tr.replaceWith(0, state.doc.nodeSize - 2, fragment));
   }
 
@@ -128,7 +128,7 @@ function getEditorState(options) {
   if (options.html || options.text) {
     let div = document.createElement('div');
     options.html ? (div.innerHTML = options.html) : (div.textContent = options.text);
-    options.doc = DOMParser.fromSchema(schema).parse(div);
+    options.doc = DOMParser.fromSchema(schema).parse(div, { preserveWhitespace: 'full' });
   }
 
   return EditorState.create({
