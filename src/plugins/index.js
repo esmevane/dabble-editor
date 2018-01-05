@@ -3,6 +3,7 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { placeholders } from './placeholders';
+import { firstLetter } from './first-letter';
 import { history, customizeHistory } from './history';
 import { buildKeymap } from './keymap';
 import { navKeymap } from './navigation';
@@ -20,6 +21,7 @@ export function plugins(schema, options) {
     keymap(buildKeymap(schema)),
     keymap(baseKeymap),
     placeholders(options.placeholder),
+    firstLetter(options.styleFirstLetter),
     customizeHistory(),
     history({
       depth: 400, // number of history items to keep (default is 100)
